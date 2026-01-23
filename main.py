@@ -7,6 +7,7 @@ from asteroidfield import AsteroidField
 from circleshape import CircleShape
 import sys
 from shot import Shot
+import health
 
 def main():
     pygame.init()
@@ -46,8 +47,12 @@ def main():
         for asteroid in asteroids:
             if CircleShape.collidees_with(player, asteroid) == True:
                 log_event("player_hit")
-                print("Game over!")
-                sys.exit()
+                player.health -= ASTEROID_DAMAGE
+                if player.health < 1:
+                    print("Game over!")
+                    sys.exit()
+                else:
+                    continue
             for shot in shots:
                 if CircleShape.collidees_with(shot, asteroid) == True:
                     log_event("asteroid_shot")
