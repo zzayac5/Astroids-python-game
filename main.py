@@ -33,7 +33,7 @@ def main():
 # Shooting Setup #
     shots = pygame.sprite.Group()
     Shot.containers = (shots, updatable, drawable)
-    
+
     
 
 
@@ -48,6 +48,11 @@ def main():
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+            for shot in shots:
+                if CircleShape.collidees_with(shot, asteroid) == True:
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    asteroid.split()
         for drawn in drawable:
             drawn.draw(screen)
         pygame.display.flip()
