@@ -9,6 +9,7 @@ import sys
 from shot import Shot
 import health
 
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -47,8 +48,11 @@ def main():
         for asteroid in asteroids:
             if CircleShape.collidees_with(player, asteroid) == True:
                 log_event("player_hit")
-                player.health -= ASTEROID_DAMAGE
+                #Here I want to show "You're Hit" flash at the bottom of the screen in red.
+                player.health -= (ASTEROID_MIN_DAMAGE * asteroid.radius)
+                log_event(f"player_health_at{player.health}")
                 if player.health < 1:
+                    log_event("player_died")
                     print("Game over!")
                     sys.exit()
                 else:
