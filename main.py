@@ -7,7 +7,7 @@ from asteroidfield import AsteroidField
 from circleshape import CircleShape
 import sys
 from shot import Shot
-import health
+
 
 
 def main():
@@ -36,21 +36,26 @@ def main():
     shots = pygame.sprite.Group()
     Shot.containers = (shots, updatable, drawable)
 
-    
-
-
-
+   
 #Game Loop#
     while True:
         log_state()
         screen.fill("black")
         updatable.update(dt)
+        pygame.font.init()
+                
+        #Begining the game loop
+        
         for asteroid in asteroids:
-            if CircleShape.collidees_with(player, asteroid) == True:
+            if CircleShape.collidees_with(player, asteroid) == True:   #Player runs into asteroid#
                 log_event("player_hit")
-                #Here I want to show "You're Hit" flash at the bottom of the screen in red.
+                #Here I want to show "You're Hit" flash at the bottom of the screen in red working on this.
+                #                                                                           #
+                #                                                                           #
+
                 player.health -= (ASTEROID_MIN_DAMAGE * asteroid.radius)
                 log_event(f"player_health_at{player.health}")
+
                 if player.health < 1:
                     log_event("player_died")
                     print("Game over!")
@@ -69,13 +74,6 @@ def main():
             if event.type == pygame.QUIT:
                 return
         dt = clock.tick(60.0) / 1000
-
-
-
-    print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
-    print (f"Screen width: {SCREEN_WIDTH}")
-    print (f"Screen height: {SCREEN_HEIGHT}")
-
 
 
 

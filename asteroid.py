@@ -10,8 +10,15 @@ class Asteroid (CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
 
+
     def draw(self, screen):
-        pygame.draw.circle(screen, "yellow", self.position, self.radius, LINE_WIDTH)
+        if self.radius <= ASTEROID_MIN_RADIUS * 1:
+            color = SMALL_ASTEROID_COLOR
+        elif self.radius >= ASTEROID_MIN_RADIUS *1.15 and self.radius <= ASTEROID_MIN_RADIUS * 2.9:
+            color = MED_ASTEROID_COLOR
+        else:
+            color = LARGE_ASTEROID_COLOR
+        pygame.draw.circle(screen, color, self.position, self.radius, LINE_WIDTH)
         
 
     def update(self, dt):
@@ -35,4 +42,4 @@ class Asteroid (CircleShape):
             asteroid_2 = Asteroid(self.position.x, self.position.y, new_radius)
             asteroid_2.velocity = new_asteroid_num_two_vector * 1.2
     
-            
+

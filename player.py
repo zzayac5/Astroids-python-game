@@ -9,6 +9,7 @@ class Player (CircleShape):
         self.rotation = 0
         self.shot_cooldown_timer = 0
         self.health = PLAYER_FULL_HEALTH
+        self.status = PLAYER_STATUS_NORM
 
 
     def triangle(self):
@@ -40,6 +41,10 @@ class Player (CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
+        if keys[pygame.K_p]:
+            self.status = PLAYER_STATUS_POWER_UP
+        if keys[pygame.K_m]:
+            self.status = PLAYER_STATUS_POWER_MAX
 
     def move(self, dt):
         unit_vector = pygame.Vector2(0, 1)
@@ -53,9 +58,10 @@ class Player (CircleShape):
             pass 
         else:
             self.shot_cooldown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
-            bullet = Shot(self.position.x, self.position.y)
+            bullet = Shot(self.position.x, self.position.y, self.status)
             bullet_vector = pygame.Vector2(0,1)
             bullet_vector_with_rotation = bullet_vector.rotate(self.rotation)
             bullet_vector_with_roatation_and_speed = (bullet_vector_with_rotation * PLAYER_SHOOT_SPEED)
             bullet.velocity = bullet_vector_with_roatation_and_speed
-        
+    
+
