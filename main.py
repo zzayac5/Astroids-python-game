@@ -66,7 +66,10 @@ def main():
                 if CircleShape.collidees_with(shot, asteroid) == True:
                     log_event("asteroid_shot")
                     shot.kill()
-                    asteroid.split()
+                    if asteroid.health < 1:
+                        asteroid.split()
+                    else:
+                        asteroid.health -= 1
         for drawn in drawable:
             drawn.draw(screen)
         pygame.display.flip()
