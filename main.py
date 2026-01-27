@@ -36,7 +36,7 @@ def main():
     shots = pygame.sprite.Group()
     Shot.containers = (shots, updatable, drawable)
 
-   
+    score = PLAYER_STARTING_SCORE
 #Game Loop#
     while True:
         log_state()
@@ -49,16 +49,15 @@ def main():
         for asteroid in asteroids:
             if CircleShape.collidees_with(player, asteroid) == True:   #Player runs into asteroid#
                 log_event("player_hit")
-                #Here I want to show "You're Hit" flash at the bottom of the screen in red working on this.
-                #                                                                           #
-                #                                                                           #
 
                 player.health -= (ASTEROID_MIN_DAMAGE * asteroid.radius)
                 log_event(f"player_health_at{player.health}")
 
                 if player.health < 1:
                     log_event("player_died")
-                    print("Game over!")
+                    print("#########  Game over!  ##########")
+                    print("#######  Your Score Is:  ########")
+                    print(f"########     {score}     ###########")
                     sys.exit()
                 else:
                     continue
@@ -66,6 +65,10 @@ def main():
                 if CircleShape.collidees_with(shot, asteroid) == True:
                     log_event("asteroid_shot")
                     shot.kill()
+                    points_earned = SCORE_PER_SHOT // asteroid.radius
+                    score += points_earned
+                    log_event(f"earned_points {points_earned}")
+                    log_event(f"new_score: {score}")
                     if asteroid.health < 1:
                         asteroid.split()
                     else:
